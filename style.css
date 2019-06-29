@@ -1,0 +1,259 @@
+body{
+	background-color: rgb(144,238,144);
+}
+
+div.conteiner{
+	display: inline;
+}
+#time{ /*contenitore per la canvas*/
+	position: absolute;
+	top: 140px;
+	left: 700px;
+	text-shadow: 2px 2px 5px #000000;
+	animation:  slide;
+    animation-duration: 1s;
+    width: 300px;
+    font-family: "Comic Sans MS", cursive, sans-serif;
+    font-weight: 10;
+    color: white;
+}
+#number{
+	display: inline-block;
+	width: 100px;
+	height: 20px;
+	border-style: groove;
+	position: absolute;
+	left: 1020px;
+	top: 80px;
+	font-size: 15px;
+}
+#pixel{
+	display: inline-block;
+	width: 100px;
+	height: 20px;
+	border-style: groove;
+	position: absolute;
+	left: 1150px;
+	top: 80px;
+	font-size: 15px;
+}
+.range{
+	width: 80%;
+	background-color: rgb(255,255,224);
+	cursor: pointer;
+}
+#mark{
+	position: absolute;
+	left: 800px;
+	top: 80px;
+	display: inline;
+}
+table.selectC{
+	display: inline-table;
+	border-spacing: 3px;
+	position: absolute;
+	left: 350px;
+	top: 10px;	
+}
+button{
+	position: absolute;
+	left: 10px;
+	top: 10px;
+	height: 100px;
+	width: 100px;
+	padding: 2px;
+	font-family: Arial 15px;
+	background-image: url("imgs/trash.png");
+	background-size: cover;
+}
+button.shadow:hover{
+	box-shadow: 3px 3px 3px 3px #41A317;
+
+}
+td{
+	width: 50px;
+	height: 50px;
+
+}
+td.red{
+	background-color: red;
+	
+}
+td.pink{
+	background-color: pink;
+}
+td.orange{
+	background-color: orange;
+}
+td.yellow{
+	background-color: yellow;
+}
+td.green{
+	background-color: green;
+}
+td.grey{
+	background-color: grey;
+}
+label{
+	font-size: 15px;
+	font-weight: bold; 
+}
+p{
+	font-size: 15px;
+	font: arial;
+	position: absolute;
+	display: inline;
+	font-weight: bold; 
+}
+p.utility{
+	left: 800px;
+	top: 0px;
+}
+img{
+	width: 40px;
+	height: 40px;
+}
+#console{
+	border-style: groove;
+	border-color: #ffff;
+	/*width: 10000px;*/
+	height: 125px;
+    max-height: 200px;
+    position: absolute;
+    padding: 0px;
+    margin-left: 200px;
+    animation:  slide-right;
+    animation-duration: 1s;
+	background-image: linear-gradient(to right, rgb(255,255,255),rgb(155,155,155),rgb(105,105,105));	
+	margin-bottom: 150px;
+}
+#previewColor{
+	height: 100px;
+	width: 100px;
+	position: absolute;
+	left: 550px;
+	top: 10px;
+	display: inline-block;
+	border: inset;
+
+}
+#setColor{
+	position: absolute;
+	left: 0px;
+	top: 55px;
+}
+#pensil{
+	position: absolute;
+	left: 50px;
+	top: 0px;
+}
+#circle{
+	position: absolute;
+	left: 100px;
+	top: 0px;
+}
+#quadrat{
+	position: absolute;
+	left: 150px;
+	top: 0px;
+}
+#move{
+	position: absolute;
+	left: 200px;
+	top: 0px;
+}
+#line{
+	position: absolute;
+	left: 250px;
+	top: 0px;
+
+}
+#previewObj{
+	position: absolute;
+	height: 100px;
+	width: 100px;
+	left: 1300px;
+	top: 10px;
+	background-color: rgb(255,255,255);
+	border:groove;
+}
+#r{
+	position: absolute;
+	left: 140px;
+	top:10px;
+	width: 200px;
+	height: 22px;
+}
+#g{
+	position: absolute;
+	left: 140px;
+	top: 50px;
+	width: 200px;
+	height: 22px;
+}
+#b{
+	position: absolute;
+	left: 140px;
+	top: 90px;
+	width: 200px;
+	height: 22px;
+}
+#myCanvass{
+	position: absolute;
+	top: 165px;
+	display: block;
+	background-color: rgb(255,255,255);
+}
+
+#leaflet{
+	/*font-size: 10px;*/
+	position: absolute;
+	left: 675px;
+    top: 5px;
+}
+div.bk{
+	position: absolute;
+	left: 675px;
+	top: 15px;
+	font-size: 10px;
+   
+}
+
+*{
+	-webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+}
+
+
+.bktd{
+	width:40 px;
+	height: 12px;
+	border-style: groove;
+	border-width: 2px;
+	text-align: center;
+}	
+
+/* definizione dell'animazione*/
+@keyframes slide-right{
+	from {
+	  margin-left: -100%;
+	}
+
+	to {
+	  margin-left: 175px;
+	}
+}
+
+@keyframes slide{
+	from{
+		margin-left: 100%;
+	}
+	to{
+		margin-left: 0%;
+	}
+
+}
+
+
