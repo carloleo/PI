@@ -6,14 +6,14 @@
 	<link rel="stylesheet" type="text/css" href="style.css">
 	<script type="text/javascript" src="interfaceEvents.js"></script>
 </head>
-<body id="grad" leftmargin="0" topmargin="0"> <!--delete a page's border -->
+<body id="grad" leftmargin="0" topmargin="0"> <!--elimino i bordi alla pagina -->
 	<div id="console">
 		<button class="shadow" onclick="cleanAll()"></button>
-		<table class="selectC"> <!--table for chosen basic color -->
+		<table class="selectC"> <!--tabella contente i colori selezionabili direttamente -->
 			<tr> <td class="red" onclick="evideceTd('red')"></td> <td class="pink" onclick="evideceTd('pink')"></td> <td class="grey" onclick="evideceTd('grey')"></td></tr>
 			<tr> <td class="orange" onclick="evideceTd('orange')"></td><td class="yellow" onclick="evideceTd('yellow')"></td> <td class="green"onclick="evideceTd('green')"></td></tr>
 		</table>
-	    <div id="r" class="conteiner">  <!--three input rage for chosen personal rgb color-->
+	    <div id="r" class="conteiner">  <!--input per creare un colore a piacere-->
 			<label>R: </label><input type="range" name="r" min="0" max="255" onmousemove="showColor()" onclick="showColor()" class="range">
 		</div>	
 		<div id="g" class="conteiner">
@@ -23,30 +23,29 @@
 			<label>B:</label> <input type="range" name="b" min="0" max="255"  onmousemove="showColor()" onclick="showColor()" class="range">
 		</div>   
 		<div id="previewColor"></div>
-		<!-- it permit chose of  canvas's backgroundcolour -->
 		<label id="leaflet"> BG color </label>
 		<div class="bk"> 
 			 <br> 
-			<table>
-				<tr><td class="bktd" onclick="eviBktd(0)"> white</td></tr>
+			<table> <!-- tabella per per selzionare il colore di background del canvas -->
+				<tr> <td class="bktd" onclick="eviBktd(0)"> white</td></tr>
 				<tr> <td class="bktd" onclick="eviBktd(1)"> red</td></tr>
 				<tr> <td class="bktd" onclick="eviBktd(2)"> black </td></tr>
 				<tr> <td class="bktd" onclick="eviBktd(3)">brown</td></tr>
 			</table>
 		</div>
-		<div id="previewObj"></div>
-		<p class="utility">Tools: <!--this paragraf contains a images of tools. A tool is chose when user click over it-->  
+		<div id="previewObj"></div> <!-- div che contiene i tool selezionabili-->  
+		<p class="utility">Tools: 
 			<img src="./imgs/pensil.png" id="pensil" onclick="imgClick(1)">
 			<img src="./imgs/circle.png" id="circle" onclick="imgClick(2)">
 			<img src="./imgs/square.png" id="quadrat" onclick="imgClick(3)">
 			<img src="./imgs/move.png" id="move" onclick="imgClick(4)">
 			<img src="./imgs/line.png" 	 id="line" onclick="imgClick(5)">
 		</p>
-		<div id="mark"> <!--it contains a input for mark of draw -->  
+		<div id="mark"> <!--input per la dimenensione del tratto -->  
 			<label>Mark:</label><input id="n" type="range" min="0.3" step ="0.01" max="6" onmousemove="showSize()">
 		</div>
-		<div id="number"></div>	<!-- it shows mark in mm-->
-		<div id="pixel"></div><!--it shows mark in pi-->
+		<div id="number"></div>	<!-- div che contiene la dimensione del tratto in millimetri-->
+		<div id="pixel"></div><!--in pixel-->
 	</div>
 	<div id="time">TIME!</div>
 	<canvas id="myCanvass"></canvas><!-- canvas-->

@@ -42,13 +42,13 @@ function cleanAll(){
  * @brief: disegna un oggetto che rappresenta una linea
 */
 function drawLine(ctx,x1,y1,x2,y2,color_line,size_line){
-	  ctx.strokeStyle = color_line;
-      ctx.lineWidth = size_line;
-      ctx.beginPath();
-      ctx.moveTo(x1,y1);
-      ctx.lineTo(x2,y2);
-      ctx.closePath();
-      ctx.stroke();
+	ctx.strokeStyle = color_line;
+	ctx.lineWidth = size_line;
+	ctx.beginPath();
+	ctx.moveTo(x1,y1);
+	ctx.lineTo(x2,y2);
+	ctx.closePath();
+	ctx.stroke();
 }
 /*
  * @brief: disegna un oggetto che rappresenta un cerchio
@@ -56,23 +56,22 @@ function drawLine(ctx,x1,y1,x2,y2,color_line,size_line){
 function drawCircle(ctx,center,radius,color_circle,size_circle,dx){
 	if(typeof center === 'undefined' || typeof radius === 'undefined'|| center === null || radius === null) return;
 	ctx.lineWidth = size_circle;
-    ctx.strokeStyle = color_circle;
-   	ctx.beginPath();
-    ctx.ellipse(center.x_c,center.y_c,radius,radius,0,0,2*Math.PI);
-    ctx.closePath();
-    ctx.stroke();	
-
+	ctx.strokeStyle = color_circle;
+	ctx.beginPath();
+	ctx.ellipse(center.x_c,center.y_c,radius,radius,0,0,2*Math.PI);
+	ctx.closePath();
+	ctx.stroke();	
 }
 /*
  * @brief: disegna un oggetto che rappresenta un rettangolo
 */
 function drawRectangle(ctx,p1,p2,color_rect,size_rect){
-   	if(typeof p1 === 'undefined' || typeof p2 === 'undefined'|| p1 === null || p2 === null) return;
-   	ctx.lineWidth = size_rect;
-    ctx.strokeStyle = color_rect;
-    let dx = p2.x_c - p1.x_c;
-    let dy = p2.y_c - p1.y_c;
-    let l = Math.max(dx,dy);
+	if(typeof p1 === 'undefined' || typeof p2 === 'undefined'|| p1 === null || p2 === null) return;
+	ctx.lineWidth = size_rect;
+	ctx.strokeStyle = color_rect;
+	let dx = p2.x_c - p1.x_c;
+	let dy = p2.y_c - p1.y_c;
+	let l = Math.max(dx,dy);
 	ctx.strokeRect(p1.x_c,p1.y_c,l,l);
 
 }
@@ -85,20 +84,19 @@ function drawPensil(ctx,elm){
 	let size = elm.getSize();
 	let frist = true;
 	ctx.lineWidth = size;
-    ctx.strokeStyle = color;
-    ctx.beginPath();
+	ctx.strokeStyle = color;
+	ctx.beginPath();
 	points.forEach(p =>{
-		if(frist){
-			ctx.moveTo(p.x_c,p.y_c);
-			frist = false;
-		}
-		else{
-			ctx.lineTo(p.x_c,p.y_c)
-		}
+	if(frist){
+		ctx.moveTo(p.x_c,p.y_c);
+		frist = false;
+	}
+	else{
+		ctx.lineTo(p.x_c,p.y_c)
+	}
 	})
 	ctx.stroke();
 }
-	
 /*
  * @brief: disegna gli oggetti
 */
@@ -107,62 +105,58 @@ function draw(ctx,elements){
 	ctx.clearRect(0,0,canvas.width,canvas.height); //pulisco il canvas
 	var i = 0;
 	elements.forEach(el =>{
-		ctx.save();
-		let i_d = el.getId();
-		switch (i_d){
-			case line:
-				let begin = el.getBegin();
-				let end = el.getEnd();
-				drawLine(ctx,begin.x_c,begin.y_c,end.x_c,end.y_c,el.getColor(),el.getSize());
-				break;
-			case circle:
-				let center = el.getCenter();
-				let radius = el.getRadius();
-				drawCircle(ctx,center,radius,el.getColor(),el.getSize(),el.getDx());
-				break;
-			case rectangle:
-				drawRectangle(ctx,el.getP1(),el.getP2(),el.getColor(),el.getSize());
-				break;
-			case pensil:
-				drawPensil(ctx,el);
-				break;	
-			default:
-				break;	
-		}
-		ctx.restore();
+	ctx.save();
+	let i_d = el.getId();
+	switch (i_d){
+		case line:
+			let begin = el.getBegin();
+			let end = el.getEnd();
+			drawLine(ctx,begin.x_c,begin.y_c,end.x_c,end.y_c,el.getColor(),el.getSize());
+			break;
+		case circle:
+			let center = el.getCenter();
+			let radius = el.getRadius();
+			drawCircle(ctx,center,radius,el.getColor(),el.getSize(),el.getDx());
+			break;
+		case rectangle:
+			drawRectangle(ctx,el.getP1(),el.getP2(),el.getColor(),el.getSize());
+			break;
+		case pensil:
+			drawPensil(ctx,el);
+			break;	
+		default:
+		break;	
+	}
+	ctx.restore();
 	})
-
 }
 /*
- * @brief: evidenzia il colore di background selezionato
+ * @brief: evidenzia e setta il colore di background selezionato per il canvas
 */
 function eviBktd(i){
-	let els = document.getElementsByClassName("bktd");
-	let canvas = document.getElementById("myCanvass");
+let els = document.getElementsByClassName("bktd");
+let canvas = document.getElementById("myCanvass");
 	for(let j = 0; j < 4 ; j++){
 		if(j == i){
 			els[j].style.backgroundColor = "rgb(144,238,144)";
 			switch(i){
-				case 0:
-					canvas.style.backgroundColor = "rgb(255,255,255)";
-					break;
-				case 1:
-					canvas.style.backgroundColor = "rgb(255,0,0)";
-					break;
-				case 2:
-					canvas.style.backgroundColor = "rgb(0,0,0)";
-					break;
-				case 3:
-					canvas.style.backgroundColor = "rgb(139,69,19)";
-					break;
-				default: break;	
+			case 0:
+				canvas.style.backgroundColor = "rgb(255,255,255)";
+				break;
+			case 1:
+				canvas.style.backgroundColor = "rgb(255,0,0)";
+				break;
+			case 2:
+				canvas.style.backgroundColor = "rgb(0,0,0)";
+				break;
+			case 3:
+				canvas.style.backgroundColor = "rgb(139,69,19)";
+				break;
+			default: break;	
 			}
-
 		} 
 		else els[j].style.backgroundColor = "rgb(255,255,255)";
-     }
-	
-	
+	}
 }
 /*
  * @brief: mostra il colore costruito
@@ -173,7 +167,6 @@ function showColor() {
 	var color = "rgb("+elms[0].value+", "+elms[1].value+", "+elms[2].value+")"; //costruisco colore rgb
 	box.style.backgroundColor = color; //coloro div
 	curr_color = color;
-
 }
 /*
  * @brief: inizializza lo stato della console
@@ -185,7 +178,7 @@ function initializer(){
 	n.value = curr_size;
 	showColor(); 
 	showSize();
-	eviBktd(0);
+	eviBktd(0);	
 }
 
 /*
@@ -195,90 +188,86 @@ function evideceTd(color){
 	let elms = document.getElementsByClassName("range");
 	let value = null;
 	let rgbcolors ={
-			red:"rgb(255,0,0)",
-			yellow:"rgb(255,255,0)",
-			grey:"rgb(128,128,128)",
-			pink:"rgb(255,192,203)",
-			green:"rgb(0,128,0)",
-			orange:"rgb(255,165,0)"
-		}
+		red:"rgb(255,0,0)",
+		yellow:"rgb(255,255,0)",
+		grey:"rgb(128,128,128)",
+		pink:"rgb(255,192,203)",
+		green:"rgb(0,128,0)",
+		orange:"rgb(255,165,0)"
+	}
 	//string2rgb
 	switch(color){
-		case "red":
-			elms[0].value = 255;
-			elms[1].value = 0;
-			elms[2].value = 0;
-			value = rgbcolors.red;
-		    break;
-		case "yellow":
-			elms[0].value = 255;
-			elms[1].value = 255;
-			elms[2].value = 0;
-			value = rgbcolors.yellow;
-		    break;
-		case "green":
-			elms[0].value = 0;
-			elms[1].value = 128;
-			elms[2].value = 0;
-			value = rgbcolors.green;
-		    break;
-		case "orange":
-			elms[0].value = 255;
-			elms[1].value = 165;
-			elms[2].value = 0;
-			value = rgbcolors.orange;
-		    break;
-		case "grey":
-			elms[0].value = 128;
-			elms[1].value = 128;
-			elms[2].value = 128;
-			value = rgbcolors.grey;
-		    break;
-		case "pink":
-			elms[0].value = 255;
-			elms[1].value = 192;
-			elms[2].value = 203;
-			value = rgbcolors.pink;
-		    break;            
-		default:	
-			 break;    
+	case "red":
+		elms[0].value = 255;
+		elms[1].value = 0;
+		elms[2].value = 0;
+		value = rgbcolors.red;
+		break;
+	case "yellow":
+		elms[0].value = 255;
+		elms[1].value = 255;
+		elms[2].value = 0;
+		value = rgbcolors.yellow;
+		break;
+	case "green":
+		elms[0].value = 0;
+		elms[1].value = 128;
+		elms[2].value = 0;
+		value = rgbcolors.green;
+		break;
+	case "orange":
+		elms[0].value = 255;
+		elms[1].value = 165;
+		elms[2].value = 0;
+		value = rgbcolors.orange;
+		break;
+	case "grey":
+		elms[0].value = 128;
+		elms[1].value = 128;
+		elms[2].value = 128;
+		value = rgbcolors.grey;
+	break;
+	case "pink":
+		elms[0].value = 255;
+		elms[1].value = 192;
+		elms[2].value = 203;
+		value = rgbcolors.pink;
+		break;            
+	default:break;    
 	}
 	let box = document.getElementById("previewColor");
 	box.style.backgroundColor = value;
 	curr_color = value;
 }
-
 /*
  * @brief: mostra il tool selezionato
 */
 function imgClick(img){ 
 	var pw = document.getElementById("previewObj");;
 	switch(img){
-		case pensil:
-			pw.style.backgroundImage="url(imgs/pensil.png)";
-			curr_tool = pensil;
-			break;
-		case circle:
-			pw.style.backgroundImage="url(imgs/circle.png)";
-			curr_tool = circle;
-			break;
-		case rectangle:
-			pw.style.backgroundImage="url(imgs/square.png)";
-			curr_tool = rectangle;
-			break;
-		case move:
-			pw.style.backgroundImage="url(imgs/move.png";
-			curr_tool = move;
-			break;
-		case line:
-			pw.style.backgroundImage="url(imgs/line.png)";
-			curr_tool = line;
-			break;
-		default:
-			break;			
+	case pensil:
+		pw.style.backgroundImage="url(imgs/pensil.png)";
+		curr_tool = pensil;
+		break;
+	case circle:
+		pw.style.backgroundImage="url(imgs/circle.png)";
+		curr_tool = circle;
+		break;
+	case rectangle:
+		pw.style.backgroundImage="url(imgs/square.png)";
+		curr_tool = rectangle;
+		break;
+	case move:
+		pw.style.backgroundImage="url(imgs/move.png";
+		curr_tool = move;
+		break;
+	case line:
+		pw.style.backgroundImage="url(imgs/line.png)";
+		curr_tool = line;
+		break;
+	default:break;			
 	}
 	pw.style.backgroundSize="cover"; //adatto l'immagine alla dimensione del contenitore
-
 }
 /*
  * @brief: mostra la dimensione del tratto corrente
@@ -330,9 +319,9 @@ function Line(begin,end){
 			 dy = point.y_c - tmp_b.y_c;
 		}
 		else if(tail){//punto finale
-			dx = point.x_c - tmp_e.x_c;
-			dy = point.y_c - tmp_e.y_c;
-		}
+				dx = point.x_c - tmp_e.x_c;
+				dy = point.y_c - tmp_e.y_c;
+			}
 		dy /= 3;
 		dx /=3;
 		tmp_b.x_c += dx;
@@ -357,7 +346,6 @@ function Line(begin,end){
 		this.end = end;
 		tmp_e = end;
 	}
-
 	this.getId = function(){
 		return this.i_d;
 	}
@@ -415,7 +403,6 @@ function Circle(center,r){
 	this.getDx = function(){
 		return this.dx
 	}
-
 	this.isIn = function(point){
 		let x1 = point.x_c;
 		let y1 = point.y_c;
@@ -471,7 +458,6 @@ function Rectangle(p1){
 	this.setP1 = function(p){
 		this.p1 = p;
 	}
-
 	this.getP1 = function(){
 		return this.p1;
 	}
@@ -560,7 +546,6 @@ function pick(sketchs,point){
 			console.log(obj);
 			break;
 		}
-	
 	}
 	return obj;
 }
@@ -568,185 +553,181 @@ function pick(sketchs,point){
 
 var last_point = null;
 window.onload =function(e){
-			initializer();
-			let canvas = document.getElementById("myCanvass");
-			let div = document.getElementById("console"); //prendo la console dei comandi
-			let cc = document.getElementById("console");
-			cc.style.width = window.innerWidth + "px";
-			let ctx = canvas.getContext("2d");
-			let canvas_space = canvas.getBoundingClientRect(); //prendo cordinate inizio del canvas
-			var inizio = null;
-			let left = canvas_space.left;
-			let top = canvas_space.top;
+	initializer();
+	let canvas = document.getElementById("myCanvass");
+	let div = document.getElementById("console"); //prendo la console dei comandi
+	let ctx = canvas.getContext("2d");
+	let canvas_space = canvas.getBoundingClientRect(); //prendo cordinate inizio del canvas
+	var inizio = null;
+	let left = canvas_space.left;
+	let top = canvas_space.top;
 
 			
-			var max = 0;
-			var max2 = 0;
-			
-			//gestisce le dimensioni del canvas all'ridimensionamento della pagina
-			function resize(){
-				max = Math.max(max,window.innerWidth)
-				div.style.width ="1420px";
-				canvas.width= max;
-				max2 = Math.max(max2,window.innerHeight)
-				canvas.height= Math.floor(max2*0.8);
-				draw(ctx,sketchs);
+	var max = 0;
+	var max2 = 0;
+	
+	//gestisce le dimensioni del canvas all'ridimensionamento della pagina
+	function resize(){
+		max = Math.max(max,window.innerWidth)
+		div.style.width ="1420px";
+		canvas.width= max;
+		max2 = Math.max(max2,window.innerHeight)
+		canvas.height= Math.floor(max2*0.8);
+		draw(ctx,sketchs);
 
-			}
-			window.onresize = function(e){
-				resize();
-			}
-			resize();
-			let time = document.getElementById("time");
+	}
+	window.onresize = function(e){
+		resize();
+	}
+	resize();
+	let time = document.getElementById("time");
 
-			//mostra il tempo trascorso dall'avvio della pagina web
-			function animation(){
-				s = (s + 1) % 60;
-				if((s % 60) == 0) m = (m + 1) % 60;
-				if((m != 0) && ((m % 60) == 0)) h += 1;
-				time.innerHTML = "You are drawing for "+h+"   h"+" "+m+" m"+" "+s+" s";
-			}
+	//mostra il tempo trascorso dall'avvio della pagina web
+	function animation(){
+		s = (s + 1) % 60;
+		if((s % 60) == 0) m = (m + 1) % 60;
+		if((m != 0) && ((m % 60) == 0)) h += 1;
+		time.innerHTML = "You are drawing for "+h+"   h"+" "+m+" m"+" "+s+" s";
+	}
 
-			let t = window.setInterval(animation,990);
-
-
-			//traduce le cordinate rispetto al canvas
-			function view2world(x,y){
-				let x_c = Math.abs(x-left);
-				let y_c = Math.abs(y-top);
-				return {x_c,y_c};
-			}
+	let t = window.setInterval(animation,990);
 
 
-			var yes = false;
-			var obj_over = null;
-			var drag = false;
-			var frist_point = null;
-			var gamma = {dx:0 , dy:0};
-			canvas.onmousedown = function(e){
-				if(curr_tool === null || down || e == null || moves) return;
-				var inizio = view2world(e.clientX,e.clientY);
-				if(inizio === null || typeof inizio === 'undefined') return;
-				//in base al tool selezionato aggiungo il corrispettivo oggetto negli sketchs
-				switch(curr_tool){
-					case line:
-						 sketchs.push(new Line(inizio,inizio));
-						 break;
-					case circle:
-						 sketchs.push(new Circle(inizio,0)); 
-						 break;	
-					case rectangle:
-						 sketchs.push(new Rectangle(inizio));
-						 last_point = inizio;
-						 break;
-					case pensil:
-						 sketchs.push(new Pensil(inizio));
-						 break;
-					case move:
-						if(drag) break;
-						 obj_over = pick(sketchs,inizio);
-						 if(obj_over != null){
-						 	drag = true;
-						 	frist_point =  inizio;
-						 	sketchs.push(obj_over);
-						 	curr_tool = obj_over.getId();
-						 	//calcolo gamma per rendere il drang & drop fluido 
-						 	if(obj_over.getId() == rectangle){
-						 		let p = obj_over.getP1();
-						 		gamma.dx = inizio.x_c - p.x_c;
-						 		gamma.dy = inizio.y_c - p.y_c;
-							}
-							else if(obj_over.getId() == circle){
-								let p = obj_over.getCenter();
-						 		gamma.dx = inizio.x_c - p.x_c;
-						 		gamma.dy = inizio.y_c - p.y_c;
+	//traduce le cordinate rispetto al canvas
+	function view2world(x,y){
+		let x_c = Math.abs(x-left);
+		let y_c = Math.abs(y-top);
+		return {x_c,y_c};
+	}
 
-							}
-						 }
-					    break;
-					default:
-						break;
 
+	var yes = false;
+	var obj_over = null;
+	var drag = false;
+	var frist_point = null;
+	var gamma = {dx:0 , dy:0};
+	canvas.onmousedown = function(e){
+		if(curr_tool === null || down || e == null || moves) return;
+		var inizio = view2world(e.clientX,e.clientY);
+		if(inizio === null || typeof inizio === 'undefined') return;
+		//in base al tool selezionato aggiungo il corrispettivo oggetto negli sketchs
+		switch(curr_tool){
+			case line:
+				 sketchs.push(new Line(inizio,inizio));
+				 break;
+			case circle:
+				 sketchs.push(new Circle(inizio,0)); 
+				 break;	
+			case rectangle:
+				 sketchs.push(new Rectangle(inizio));
+				 last_point = inizio;
+				 break;
+			case pensil:
+				 sketchs.push(new Pensil(inizio));
+				 break;
+			case move:
+				if(drag) break;
+				 obj_over = pick(sketchs,inizio);
+				 if(obj_over != null){
+				 	drag = true;
+				 	frist_point =  inizio;
+				 	sketchs.push(obj_over);
+				 	curr_tool = obj_over.getId();
+				 	//calcolo gamma per rendere il drang & drop fluido 
+				 	if(obj_over.getId() == rectangle){
+				 		let p = obj_over.getP1();
+				 		gamma.dx = inizio.x_c - p.x_c;
+				 		gamma.dy = inizio.y_c - p.y_c;
+					}
+					else if(obj_over.getId() == circle){
+						let p = obj_over.getCenter();
+				 		gamma.dx = inizio.x_c - p.x_c;
+				 		gamma.dy = inizio.y_c - p.y_c;
+
+					}
 				}
-				down = true;
-			}
-			canvas.onmousemove = function(e){
-				if(curr_tool == null || !down ) return;
-				curr_p = view2world(e.clientX,e.clientY);
-				if(typeof curr_p === 'undefined' || curr_p === null)return;
-				moves = true;
-				let obj = sketchs[sketchs.length - 1]; //prendo l'oggetto che si sta disegnando o spostando
-				if(obj == null) return;
-				switch(curr_tool){ //in base al tool selezionato lo disegno
-					case line:
-							if(drag){ // sono nello stato di drag
-								obj.move(curr_p);
-								draw(ctx,sketchs);
-								break;
-							}
-							obj.setEnd(curr_p);
-							draw(ctx,sketchs);
-							break;
-					case circle:
-						   if(drag){
-						   		curr_p.x_c -= gamma.dx;
-								curr_p.y_c -= gamma.dy;
-								obj.move(curr_p)
-						   		draw(ctx,sketchs);
-						   		break;
-						   	}
-							let r_x = Math.abs(curr_p.x_c - obj.getCenter().x_c);//calcolo il nuovo raggio
-						 	let r_y = Math.abs(curr_p.y_c - obj.getCenter().y_c);
-						 	obj.setRadius(Math.max(r_x,r_y));
-						 	obj.setDx(Math.abs(r_x-r_y));
-						 	draw(ctx,sketchs);
-							   break;
-					case rectangle:
-							if(drag){
-							curr_p.x_c -= gamma.dx;
-								curr_p.y_c -= gamma.dy;
-								obj.move(curr_p);
-								draw(ctx,sketchs);
-								break;
-							}
-							obj.setP2(curr_p);
-							draw(ctx,sketchs);
-						    break; 
-					case pensil:
-							if(drag){
-								obj.move(curr_p);
-								draw(ctx,sketchs);
-								break;
-							}
-							obj.setPoint(curr_p);
-							draw(ctx,sketchs);
-							break;		    
-					default:
-						break;	
-				} 	
-			}
-			canvas.onmouseup = function(e){
-				if(curr_tool == null || !down || !moves) return;
-				down = false;
-				moves = false;
-				draw(ctx,sketchs);//disegno gli oggetti
-				if(drag){ //ripristo lo stato
-					drag = false;
-					curr_tool = move;
-					head = false;
-					tail = false;
-					obj_over = null; 
-				}
-				
-			}
-			//rimuove ultimo oggetto disegnato/spostato
-			document.onkeydown = function(e){ 
-				if(e == null || sketchs.length == 0) return;
-				if((e.wich == 90 || e .keyCode == 90) && e.ctrlKey){
-					sketchs.splice(sketchs.length-1,1);
+			    break;
+			default: break;
+
+		}
+		down = true;
+	}
+	canvas.onmousemove = function(e){
+		if(curr_tool == null || !down ) return;
+		curr_p = view2world(e.clientX,e.clientY);
+		if(typeof curr_p === 'undefined' || curr_p === null)return;
+		moves = true;
+		let obj = sketchs[sketchs.length - 1]; //prendo l'oggetto che si sta disegnando o spostando
+		if(obj == null) return;
+		switch(curr_tool){ //in base al tool selezionato lo disegno
+			case line:
+				if(drag){ // sono nello stato di drag sposto l'oggetto
+					obj.move(curr_p);
 					draw(ctx,sketchs);
+					break;
 				}
-			}	
+				obj.setEnd(curr_p);
+				draw(ctx,sketchs);
+				break;
+			case circle:
+			    if(drag){
+			   		curr_p.x_c -= gamma.dx;
+					curr_p.y_c -= gamma.dy;
+					obj.move(curr_p)
+			   		draw(ctx,sketchs);
+			   		break;
+			   	}
+				let r_x = Math.abs(curr_p.x_c - obj.getCenter().x_c);//calcolo il nuovo raggio
+			 	let r_y = Math.abs(curr_p.y_c - obj.getCenter().y_c);
+			 	obj.setRadius(Math.max(r_x,r_y));
+			 	obj.setDx(Math.abs(r_x-r_y));
+			 	draw(ctx,sketchs);
+				break;
+			case rectangle:
+				if(drag){
+				curr_p.x_c -= gamma.dx;
+					curr_p.y_c -= gamma.dy;
+					obj.move(curr_p);
+					draw(ctx,sketchs);
+					break;
+				}
+				obj.setP2(curr_p);
+				draw(ctx,sketchs);
+			    break; 
+			case pensil:
+				if(drag){
+					obj.move(curr_p);
+					draw(ctx,sketchs);
+					break;
+				}
+				obj.setPoint(curr_p);
+				draw(ctx,sketchs);
+				break;		    
+			default: break;	
+		} 	
+	}
+	canvas.onmouseup = function(e){
+		if(curr_tool == null || !down || !moves) return;
+		down = false;
+		moves = false;
+		draw(ctx,sketchs);//disegno gli oggetti
+		if(drag){ //ripristo lo stato
+			drag = false;
+			curr_tool = move;
+			head = false;
+			tail = false;
+			obj_over = null; 
+		}
+		
+	}
+	//rimuove ultimo oggetto disegnato/spostato
+	document.onkeydown = function(e){ 
+		if(e == null || sketchs.length == 0) return;
+		if((e.wich == 90 || e .keyCode == 90) && e.ctrlKey){
+			sketchs.splice(sketchs.length-1,1);
+			draw(ctx,sketchs);
+		}
+	}	
 }
 
 

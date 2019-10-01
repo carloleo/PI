@@ -5,17 +5,17 @@ body{
 div.conteiner{
 	display: inline;
 }
-#time{ /*contenitore per la canvas*/
+#time{
 	position: absolute;
 	top: 140px;
 	left: 700px;
 	text-shadow: 2px 2px 5px #000000;
 	animation:  slide;
-    animation-duration: 1s;
-    width: 300px;
-    font-family: "Comic Sans MS", cursive, sans-serif;
-    font-weight: 10;
-    color: white;
+	animation-duration: 1s;
+	width: 300px;
+	font-family: "Comic Sans MS", cursive, sans-serif;
+	font-weight: 10;
+	color: white;
 }
 #number{
 	display: inline-block;
@@ -77,7 +77,6 @@ td{
 }
 td.red{
 	background-color: red;
-	
 }
 td.pink{
 	background-color: pink;
@@ -116,7 +115,6 @@ img{
 #console{
 	border-style: groove;
 	border-color: #ffff;
-	/*width: 10000px;*/
 	height: 125px;
     max-height: 200px;
     position: absolute;
@@ -135,7 +133,6 @@ img{
 	top: 10px;
 	display: inline-block;
 	border: inset;
-
 }
 #setColor{
 	position: absolute;
@@ -206,7 +203,6 @@ img{
 }
 
 #leaflet{
-	/*font-size: 10px;*/
 	position: absolute;
 	left: 675px;
     top: 5px;
@@ -218,15 +214,12 @@ div.bk{
 	font-size: 10px;
    
 }
-
 *{
 	-webkit-touch-callout: none; /* iOS Safari */
-    -webkit-user-select: none; /* Safari */
-    -moz-user-select: none; /* Firefox */
-    -ms-user-select: none; /* Internet Explorer/Edge */
+	-webkit-user-select: none; /* Safari */
+	-moz-user-select: none; /* Firefox */
+	-ms-user-select: none; /* Internet Explorer/Edge */
 }
-
-
 .bktd{
 	width:40 px;
 	height: 12px;
@@ -245,7 +238,6 @@ div.bk{
 	  margin-left: 175px;
 	}
 }
-
 @keyframes slide{
 	from{
 		margin-left: 100%;
