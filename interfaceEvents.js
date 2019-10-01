@@ -1,24 +1,36 @@
-
- const line = 5;
+ /*
+ * definiscono l'id dei prototipi
+*/
+ const pensil = 1;
  const circle = 2;
  const rectangle = 3;
- const pensil = 1;
  const move = 4;
+ const line = 5;
  const delta = 10;
- var curr_tool = null; //tool corrente
- var curr_color = "rgb(0,0,0)"; //colore corrente nero
- var curr_size = 0.3; //dimensione corrente
- var cnt_mm = 0;
+
+ var curr_tool = null; //tool 
+ var curr_color = "rgb(0,0,0)"; //colore 
+ var curr_size = 0.3; //dimensione del tratto
+
+ /*
+ * rappresentano lo stato del drag & drop
+*/
  var down = false;
  var moves = false;
  var sketchs = [];
- var curr_stetch = null; //per drang and drop 
- var h = 0; //for time
+ var curr_stetch = null; 
+
+ /*
+ * utilizzate nell'animazione
+*/ 
+ var h = 0; 
  var m = 0;
  var s = 0;
  var head = false;
  var tail = false;
-
+/*
+ * @brief: resetta lo stato del canvas
+*/
 function cleanAll(){
 	let canvas = document.getElementById("myCanvass");
 	let ctx = canvas.getContext("2d");
@@ -26,8 +38,9 @@ function cleanAll(){
 	sketchs = [];
 
 }
-
-
+/*
+ * @brief: disegna un oggetto che rappresenta una linea
+*/
 function drawLine(ctx,x1,y1,x2,y2,color_line,size_line){
 	  ctx.strokeStyle = color_line;
       ctx.lineWidth = size_line;
@@ -37,7 +50,9 @@ function drawLine(ctx,x1,y1,x2,y2,color_line,size_line){
       ctx.closePath();
       ctx.stroke();
 }
-//aggiungere la differenza tra asse x e asse y
+/*
+ * @brief: disegna un oggetto che rappresenta un cerchio
+*/
 function drawCircle(ctx,center,radius,color_circle,size_circle,dx){
 	if(typeof center === 'undefined' || typeof radius === 'undefined'|| center === null || radius === null) return;
 	ctx.lineWidth = size_circle;
@@ -48,18 +63,22 @@ function drawCircle(ctx,center,radius,color_circle,size_circle,dx){
     ctx.stroke();	
 
 }
-
+/*
+ * @brief: disegna un oggetto che rappresenta un rettangolo
+*/
 function drawRectangle(ctx,p1,p2,color_rect,size_rect){
    	if(typeof p1 === 'undefined' || typeof p2 === 'undefined'|| p1 === null || p2 === null) return;
    	ctx.lineWidth = size_rect;
     ctx.strokeStyle = color_rect;
-    let dx = /*Math.abs*/(p2.x_c - p1.x_c);
-    let dy = /*Math.abs*/(p2.y_c - p1.y_c); //ho tolto abs per poter andare punre nel senso opposto mentre disegno
+    let dx = p2.x_c - p1.x_c;
+    let dy = p2.y_c - p1.y_c;
     let l = Math.max(dx,dy);
 	ctx.strokeRect(p1.x_c,p1.y_c,l,l);
 
 }
-
+/*
+ * @brief: disegna un oggetto che rappresenta un disegno a mano libera
+*/
 function drawPensil(ctx,elm){
 	let points = elm.getPoints();
 	let color = elm.getColor();
@@ -75,21 +94,17 @@ function drawPensil(ctx,elm){
 		}
 		else{
 			ctx.lineTo(p.x_c,p.y_c)
-			
-			
 		}
-
-
-
 	})
-	//ctx.closePath();
 	ctx.stroke();
 }
 	
-
+/*
+ * @brief: disegna gli oggetti
+*/
 function draw(ctx,elements){
 	let canvas = document.getElementById("myCanvass");
-	ctx.clearRect(0,0,canvas.width,canvas.height); //clean canvas
+	ctx.clearRect(0,0,canvas.width,canvas.height); //pulisco il canvas
 	var i = 0;
 	elements.forEach(el =>{
 		ctx.save();
@@ -118,11 +133,12 @@ function draw(ctx,elements){
 	})
 
 }
-
+/*
+ * @brief: evidenzia il colore di background selezionato
+*/
 function eviBktd(i){
 	let els = document.getElementsByClassName("bktd");
 	let canvas = document.getElementById("myCanvass");
-	//console.log(els)
 	for(let j = 0; j < 4 ; j++){
 		if(j == i){
 			els[j].style.backgroundColor = "rgb(144,238,144)";
@@ -148,27 +164,34 @@ function eviBktd(i){
 	
 	
 }
+/*
+ * @brief: mostra il colore costruito
+*/
 function showColor() {
 	var elms = document.getElementsByClassName("range");
 	var box = document.getElementById("previewColor");
 	var color = "rgb("+elms[0].value+", "+elms[1].value+", "+elms[2].value+")"; //costruisco colore rgb
-	box.style.backgroundColor = color; //coloro div per l'anteprima
+	box.style.backgroundColor = color; //coloro div
 	curr_color = color;
 
 }
-//funzione che inizializza l'ambiente
+/*
+ * @brief: inizializza lo stato della console
+*/
 function initializer(){
-	var elms = document.getElementsByClassName("range"); //prendo input per personalizzare il colore
+	var elms = document.getElementsByClassName("range");
 	for(let i = 0; i < 3; i++) elms[i].value = 0;
-	let n = document.getElementById("n"); //prendo input della mark
+	let n = document.getElementById("n");
 	n.value = curr_size;
-	showColor(); //genero un mouseclik
-	showSize(); //mostro la size inizializzata a zero
+	showColor(); 
+	showSize();
 	eviBktd(0);
 }
 
-function evideceTd(color){ //per evidenziare la cella clikkata mostro il colore in anteprima, lo converto nello standard rgb
-	//console.log("sssss  "+curr_color);
+/*
+ * @brief: mostra il colore selezionato tra quelli selezionabili direttamente
+*/
+function evideceTd(color){
 	let elms = document.getElementsByClassName("range");
 	let value = null;
 	let rgbcolors ={
@@ -220,14 +243,15 @@ function evideceTd(color){ //per evidenziare la cella clikkata mostro il colore 
 		default:	
 			 break;    
 	}
-		
 	let box = document.getElementById("previewColor");
 	box.style.backgroundColor = value;
 	curr_color = value;
 }
 
-
-function imgClick(img){ //tool selezionato lo mostro nella finestra
+/*
+ * @brief: mostra il tool selezionato
+*/
+function imgClick(img){ 
 	var pw = document.getElementById("previewObj");;
 	switch(img){
 		case pensil:
@@ -253,27 +277,27 @@ function imgClick(img){ //tool selezionato lo mostro nella finestra
 		default:
 			break;			
 	}
-	pw.style.backgroundSize="cover"; //adatto l'i'immagine alla dimensione del contenitore
+	pw.style.backgroundSize="cover"; //adatto l'immagine alla dimensione del contenitore
 
 }
-
+/*
+ * @brief: mostra la dimensione del tratto corrente
+*/
 function showSize(){ //massima dimensione 20 pixel
 	var div = document.getElementById("n");
 	var x = document.getElementById("number");
 	var pixel = document.getElementById("pixel");
 	x.innerHTML = div.value + " mm";
 	pixel.innerHTML = (div.value / 0.26).toFixed(2) +" px";
-	curr_size = (div.value / 0.26).toFixed(2); //prendo la dimesione settata
+	curr_size = (div.value / 0.26).toFixed(2); //traduco la dimensione in pixel
 }
 
-const mouse = {
-	x:0,
-	y:0,
-}
 
 var curr_p = null;
 
-
+/*
+ * @brief: prototipo che rappresenta la linea
+*/
 function Line(begin,end){
 	this.i_d = line;
 	this.begin = begin;
@@ -282,8 +306,7 @@ function Line(begin,end){
 	this.s = curr_size;
 	var tmp_b = begin;
 	var tmp_e = end;
-	//to fix
-	//se il punto è in un intoro di raggio 5 del punto iniziale ->  la seleziono
+	//se il punto è in un intoro di raggio 5 del punto iniziale o del punto finale la seleziono
 	this.isIn = function(point){
 		let x = point.x_c;
 		let y = point.y_c;
@@ -298,21 +321,21 @@ function Line(begin,end){
 
 		return false;
 	}
-
+	//trasla una linea in base al punto in cui è stata selezionata
 	this.move = function(point){
 		let dx = 0;
 		let dy = 0;
-		if(head){
+		if(head){//punto iniziale
 			 dx = point.x_c - tmp_b.x_c;
 			 dy = point.y_c - tmp_b.y_c;
 		}
-		else if(tail){
+		else if(tail){//punto finale
 			dx = point.x_c - tmp_e.x_c;
 			dy = point.y_c - tmp_e.y_c;
 		}
 		dy /= 3;
 		dx /=3;
-		tmp_b.x_c += dx; //sposto punto iniziale e punto finale
+		tmp_b.x_c += dx;
 		tmp_b.y_c += dy;
 		tmp_e.x_c += dx;
 		tmp_e.y_c += dy;
@@ -320,7 +343,6 @@ function Line(begin,end){
 		this.setEnd(tmp_e);
 		
 	}
-
 	this.setBegin = function(p){
 		this.begin = p;
 	}
@@ -348,6 +370,9 @@ function Line(begin,end){
 		return this.s;
 	}
 }
+/*
+ * @brief: prototipo che rappresenta il cerchio
+*/
 
 function Circle(center,r){
 	this.i_d = circle;
@@ -396,13 +421,13 @@ function Circle(center,r){
 		let y1 = point.y_c;
 		let x0 = var_center.x_c;
 		let y0 = var_center.y_c;
-		//se la distanza fra il punto e il cenro della circonferenza è minimore del raggio
+		//se la distanza tra il punto e il centro della circonferenza è minimore del raggio
 		return Math.sqrt((x1-x0)*(x1-x0) + (y1-y0)*(y1-y0)) < this.radius;
 
 	}
-
+	//trasla il centro del cerchio 
 	this.move = function(point){
-		let x1 = point.x_c;   //translate the centre respect point where I must move rectangle
+		let x1 = point.x_c;   
 		let y1 = point.y_c;
 		let c = var_center;
 		let dx = x1 - c.x_c;
@@ -410,16 +435,15 @@ function Circle(center,r){
 		var_center.x_c += dx;
 		var_center.y_c += dy;
 		this.setCenter(var_center);
-
-
-
 	}
 
 }
-
+/*
+ * @brief: prototipo che rappresenta il rettangolo
+*/
 function Rectangle(p1){
 	this.p1 = p1;
-	this.p2 = null; //use it only for compute lenght of side
+	this.p2 = null;
 	this.i_d = rectangle;
 	this.c = curr_color;
 	this.s = curr_size;
@@ -427,15 +451,15 @@ function Rectangle(p1){
 	var var_p2 = null;
 
 	this.isIn = function(point){
-		let dx = /*Math.abs*/(this.p2.x_c - this.p1.x_c);
-    	let dy = /*Math.abs*/(this.p2.y_c - this.p1.y_c); 
+		let dx = this.p2.x_c - this.p1.x_c;
+    	let dy = this.p2.y_c - this.p1.y_c; 
     	let l = Math.max(dx,dy);
     	if(point.x_c >= this.p1.x_c && point.x_c <= (this.p1.x_c+l) && point.y_c >= this.p1.y_c && point.y_c <= this.p1.y_c+l) return true;
     	return false;
 	}
-
+	//trasla il rettangolo
 	this.move=function(p){
-		let dx = p.x_c - var_p1.x_c; //translate respect point where I must move rectangle
+		let dx = p.x_c - var_p1.x_c; 
 		let dy = p.y_c - var_p1.y_c;
 		var_p1.x_c += dx;
 		var_p1.y_c += dy;
@@ -443,10 +467,7 @@ function Rectangle(p1){
 		var_p2.y_c += dy;
 		this.setP2(var_p2);
 		this.setP1(var_p1);
-		
-
 	}
-
 	this.setP1 = function(p){
 		this.p1 = p;
 	}
@@ -457,16 +478,13 @@ function Rectangle(p1){
 	this.getP2 = function(){
 		return this.p2;
 	}
-
 	this.setP2 = function(p){
 		this.p2 = p
 		var_p2 = p;
 	}
-
 	this.getColor = function(){
 		return this.c;
 	}
-
 	this.getSize = function(){
 		return this.s;
 	}
@@ -475,6 +493,10 @@ function Rectangle(p1){
 	}
 }
 
+/*
+ * @brief: prototipo che rappresenta il disegno a mano libera
+*/
+
 function Pensil(pStart){
 	this.points = [];
 	this.points.push(pStart);
@@ -482,7 +504,7 @@ function Pensil(pStart){
 	this.c = curr_color;
 	this.s = curr_size;
 	var tmp = this.points;
-	//se il punto è in un intoro di raggio deleta del punto iniziale || finale ->  la seleziono
+	//se il punto è in un intoro di raggio deleta del punto iniziale o finale seleziono l'oggetto
 	this.isIn=function(point){
 		let i = tmp.length-1;
 		let x = point.x_c;
@@ -491,7 +513,7 @@ function Pensil(pStart){
 		else if((x >= Math.abs(tmp[i].x_c - delta)) && (y >= Math.abs(tmp[i].y_c-delta)) && (x <= tmp[i].x_c + delta) && ( y <= tmp[i].y_c + delta)) tail = true;
 		return tail || head;
 	}
-
+	//trasla il disegno a mano libera
 	this.move =function(point){
 		let dx = 0;
 		let dy = 0;
@@ -502,45 +524,39 @@ function Pensil(pStart){
 		else if(tail){
 			 dx = point.x_c - tmp[tmp.length-1].x_c;
 			 dy = point.y_c - tmp[tmp.length-1].y_c;
-
 		}
-		
 		tmp.forEach(elm =>{
 			elm.x_c += dx;
 			elm.y_c += dy;
 		})
 
 	}
-
 	this.getPoints=function(){
 		return this.points;
 	}
-
 	this.setPoint=function(p){ 
-		//if(this.points.length > 150) return;
 		this.points.push(p);
 		tmp = this.points;
 	}
-
 	this.getId=function(){
 		return this.i_d;
 	}
-
 	this.getColor = function(){
 		return this.c;
 	}
-
 	this.getSize = function(){
 		return this.s;
 	}
 }
-//sistemare non array vuoto quando vado a rifare la pick correlation
+/*
+ *	@brief: esegue la pick correlation
+*/
 function pick(sketchs,point){
 	var obj = null;
 	for(let i = sketchs.length-1; i >= 0 ; i--){
 		if(sketchs[i].isIn(point)){
 			obj = sketchs[i];
-			sketchs.splice(i,1); //primo argomento la posizione secondo #elementi
+			sketchs.splice(i,1);
 			console.log(obj);
 			break;
 		}
@@ -549,27 +565,9 @@ function pick(sketchs,point){
 	return obj;
 }
 
-function randomRGBColor(){
-      let r = Math.floor(Math.random()*256);
-      let g = Math.floor(Math.random()*256);
-      let b = Math.floor(Math.random()*256);
-      return "rgb("+ r +","+g+","+b;
-      
-
-    }
 
 var last_point = null;
-
- function   FullScreenMode(){
-        var win = window.open("", "full", "dependent=yes, fullscreen=yes");
-        /*win.location = window.location.href;
-        window.opener = null;*/
-    }  
- FullScreenMode();
-
-			//openFullscreen()
 window.onload =function(e){
-			//console.log("ONLOADDDD")
 			initializer();
 			let canvas = document.getElementById("myCanvass");
 			let div = document.getElementById("console"); //prendo la console dei comandi
@@ -578,36 +576,30 @@ window.onload =function(e){
 			let ctx = canvas.getContext("2d");
 			let canvas_space = canvas.getBoundingClientRect(); //prendo cordinate inizio del canvas
 			var inizio = null;
-			let left = canvas_space.left;//tofixed(0)
+			let left = canvas_space.left;
 			let top = canvas_space.top;
 
-			console.log("x: "+left+" y:"+top+" canvas: "+canvas.height+" "+canvas.width);
 			
-
-
 			var max = 0;
 			var max2 = 0;
 			
-			//modificata resize
+			//gestisce le dimensioni del canvas all'ridimensionamento della pagina
 			function resize(){
 				max = Math.max(max,window.innerWidth)
-				div.style.width ="1420px"; //max//window.innerWidth;//la imposto dimensione della finestra
-				canvas.width= max//window.innerWidth;
+				div.style.width ="1420px";
+				canvas.width= max;
 				max2 = Math.max(max2,window.innerHeight)
 				canvas.height= Math.floor(max2*0.8);
 				draw(ctx,sketchs);
 
 			}
-			
-			var size = [window.innerWidth,window.innerHeight];
 			window.onresize = function(e){
-				/*console.log(size);
-				window.resizeTo(size[0],size[1]);*/
 				resize();
 			}
 			resize();
 			let time = document.getElementById("time");
 
+			//mostra il tempo trascorso dall'avvio della pagina web
 			function animation(){
 				s = (s + 1) % 60;
 				if((s % 60) == 0) m = (m + 1) % 60;
@@ -618,13 +610,14 @@ window.onload =function(e){
 			let t = window.setInterval(animation,990);
 
 
-			//translate function
+			//traduce le cordinate rispetto al canvas
 			function view2world(x,y){
 				let x_c = Math.abs(x-left);
 				let y_c = Math.abs(y-top);
-				//console.log(x_c +" "+y_c);
 				return {x_c,y_c};
 			}
+
+
 			var yes = false;
 			var obj_over = null;
 			var drag = false;
@@ -632,17 +625,18 @@ window.onload =function(e){
 			var gamma = {dx:0 , dy:0};
 			canvas.onmousedown = function(e){
 				if(curr_tool === null || down || e == null || moves) return;
-				var inizio = view2world(e.clientX,e.clientY);//translate point
+				var inizio = view2world(e.clientX,e.clientY);
 				if(inizio === null || typeof inizio === 'undefined') return;
+				//in base al tool selezionato aggiungo il corrispettivo oggetto negli sketchs
 				switch(curr_tool){
 					case line:
-						 sketchs.push(new Line(inizio,inizio)); //aggiungo la linea all'array dei disegni
+						 sketchs.push(new Line(inizio,inizio));
 						 break;
 					case circle:
-						 sketchs.push(new Circle(inizio,0)); //aggiungo il cerchio all'array dei disegni
+						 sketchs.push(new Circle(inizio,0)); 
 						 break;	
 					case rectangle:
-						 sketchs.push(new Rectangle(inizio)); //aggiungo il cerchio all'array dei disegni
+						 sketchs.push(new Rectangle(inizio));
 						 last_point = inizio;
 						 break;
 					case pensil:
@@ -656,7 +650,7 @@ window.onload =function(e){
 						 	frist_point =  inizio;
 						 	sketchs.push(obj_over);
 						 	curr_tool = obj_over.getId();
-						 	//compute gamma for move the selected square 
+						 	//calcolo gamma per rendere il drang & drop fluido 
 						 	if(obj_over.getId() == rectangle){
 						 		let p = obj_over.getP1();
 						 		gamma.dx = inizio.x_c - p.x_c;
@@ -681,11 +675,11 @@ window.onload =function(e){
 				curr_p = view2world(e.clientX,e.clientY);
 				if(typeof curr_p === 'undefined' || curr_p === null)return;
 				moves = true;
-				let obj = sketchs[sketchs.length - 1];
+				let obj = sketchs[sketchs.length - 1]; //prendo l'oggetto che si sta disegnando o spostando
 				if(obj == null) return;
-				switch(curr_tool){
+				switch(curr_tool){ //in base al tool selezionato lo disegno
 					case line:
-							if(drag){
+							if(drag){ // sono nello stato di drag
 								obj.move(curr_p);
 								draw(ctx,sketchs);
 								break;
@@ -701,15 +695,15 @@ window.onload =function(e){
 						   		draw(ctx,sketchs);
 						   		break;
 						   	}
-						   let  r_x = Math.abs(curr_p.x_c - obj.getCenter().x_c);//calcolo il nuovo ragggio
-						   let r_y = Math.abs(curr_p.y_c - obj.getCenter().y_c);
-						   obj.setRadius(Math.max(r_x,r_y));
-						   obj.setDx(Math.abs(r_x-r_y));
-						   draw(ctx,sketchs);
-						   break;
+							let r_x = Math.abs(curr_p.x_c - obj.getCenter().x_c);//calcolo il nuovo raggio
+						 	let r_y = Math.abs(curr_p.y_c - obj.getCenter().y_c);
+						 	obj.setRadius(Math.max(r_x,r_y));
+						 	obj.setDx(Math.abs(r_x-r_y));
+						 	draw(ctx,sketchs);
+							   break;
 					case rectangle:
 							if(drag){
-								curr_p.x_c -= gamma.dx;
+							curr_p.x_c -= gamma.dx;
 								curr_p.y_c -= gamma.dy;
 								obj.move(curr_p);
 								draw(ctx,sketchs);
@@ -735,18 +729,18 @@ window.onload =function(e){
 				if(curr_tool == null || !down || !moves) return;
 				down = false;
 				moves = false;
-				draw(ctx,sketchs);
-				if(drag){ //clean drag & drop  state 
+				draw(ctx,sketchs);//disegno gli oggetti
+				if(drag){ //ripristo lo stato
 					drag = false;
 					curr_tool = move;
 					head = false;
 					tail = false;
-					obj_over = null; //aggiunto ieri sera
+					obj_over = null; 
 				}
-				//console.log("onmouseup drag "+drag);
+				
 			}
-
-			document.onkeydown = function(e){ //on ctrl z the last sketch in first plan is deleted
+			//rimuove ultimo oggetto disegnato/spostato
+			document.onkeydown = function(e){ 
 				if(e == null || sketchs.length == 0) return;
 				if((e.wich == 90 || e .keyCode == 90) && e.ctrlKey){
 					sketchs.splice(sketchs.length-1,1);
